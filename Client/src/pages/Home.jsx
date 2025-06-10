@@ -3,13 +3,20 @@ import Banner from '../components/Banner'
 import { useState ,useEffect} from 'react'
 import Card from '../components/Card';
 import Jobs1 from '../components/Jobs1';
+import { FiSidebar } from 'react-icons/fi';
+import Sidebar from '../sidebar/Sidebar';
 const Home = () => {
   const [selectedCategory,setSelectedCategory]=useState(null);
   const [jobs,setJobs]=useState([]);
+  const [isloading,setIsLoading]=useState(true);
+  const [currentPage,setCurrentPage]=useState(1);
+  const itemsPerPage=6
   useEffect(()=>{
+    setIsLoading(true);
     fetch("jobs.json").then(res=>res.json()).then(data=>{
      
       setJobs(data);
+      setIsLoading(false);
     })
 
   },[])
@@ -51,8 +58,16 @@ const Home = () => {
      const result=filteredData(jobs,selectedCategory,query)
   return (
     <div ><Banner query={query} handleInputChange={handleInputChange}/>
-    <div>
-   <Jobs1 result={Array.isArray(result) ? result : []} />
+
+    <div className='bg-[#FAFAFA] md:grid grid-cols-4  gap-8 lg:px-24 px-4 py-12'>
+      <div className='bg-white p-4 rounded'><Sidebar handleChange={handleChange} handleClick={handleClick}/></div>
+      <div  className='col-span-2 bg-white p-4 rounded'> 
+        {isloading?(<p className='font-medium'>Loading....</p>):result.length >0 ? (<Jobs1 result={result} />):<>
+        <h3 className='text-lg font-bold mb-2'>{result.length} Jobs</h3>
+        <p>No data found!</p></>} </div>
+      <div className='bg-white p-4 rounded'>right</div>
+
+  
 
     </div>
     </div>
