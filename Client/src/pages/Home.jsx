@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Jobs1 from '../components/Jobs1';
 import { FiSidebar } from 'react-icons/fi';
 import Sidebar from '../sidebar/Sidebar';
+import Newsletter from '../components/Newsletter';
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -97,7 +98,9 @@ const Home = () => {
               </div>) : ""
           }
         </div>
-        <div className='bg-white p-4 rounded'>right</div>
+        <div className='bg-white p-4 rounded'>
+          <Newsletter/>
+        </div>
 
 
 
